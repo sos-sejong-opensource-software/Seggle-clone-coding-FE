@@ -1,5 +1,26 @@
 # Seggle 클론코딩 - 프론트엔드
 
+## 📝 클론코딩 일지
+<details>
+<summary> [220915] 건의게시판 목록, 건의게시판 게시글 등록 페이지</summary>
+
+<b>반드시 브랜치 생성 후 개발 진행해주세요!</b>
+
+주석을 따라 아래 페이지를 완성해주세요!
+
+- `Board.vue`
+- `BoardCreate.vue`
+
+실행 방법
+```
+$ git clone https://github.com/sos-sejong-opensource-software/Seggle-clone-coding-FE.git
+$ npm install
+$ npm run serve
+```
+</details>
+
+<br />
+
 ## 📌 개발 규칙
 
 1. 작업 전: 브랜치 생성 후 해당 브랜치에서 작업
