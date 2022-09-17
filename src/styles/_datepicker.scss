@@ -1,0 +1,28 @@
+.dp__menu {
+    @media (max-height: 800px) {
+        transform: translate(-50%, -70%) !important;
+    }
+}
+
+.dp__input_icon,
+.dp__clear_icon {
+  top: 50%;
+}
+
+.dp__calendar_row {
+    margin: 0;
+}
+
+.dp__month_year_row,
+.dp__calendar_wrap,
+.dp__action_buttons {
+    font-size: 14px;
+}
+
+.dp__button {
+    height: 5px;
+}
+
+.dp__action_buttons {
+    display: flex;
+}

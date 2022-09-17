@@ -1,0 +1,220 @@
+.problem-container {
+    padding: 5rem 0rem;
+    @media (max-width: 420px) {
+      padding: 0rem 1rem;
+    }
+  
+  
+
+    .problem-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding: 3rem 0;
+      @media (max-width: 420px) {
+        display: block;
+      }
+
+      h1 {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        @media (max-width: 420px) {
+          width: 100%;
+          padding: 0rem;
+        }
+      }
+  
+      .form-control {
+        width: 50%;
+        font-size: calc(1.375rem + 1.5vw);
+        font-weight: 800;
+        @media (max-width: 420px) {
+          width: 100%;
+        }
+      }
+
+      .form-control::placeholder {
+        color: #ced4da;
+        font-weight: 800;
+      }
+  
+      .btn {
+        padding: 0.5rem 2rem;
+        font-size: calc(0.8rem + 0.5vw);
+        font-weight: bold;
+        @media (max-width: 768px) {
+          padding: 0.3rem 1.2rem;
+        }
+  
+        &:hover {
+          background: white;
+          color: #0e1b49;
+        }
+      }
+    }
+  
+
+
+    .problem-tab {
+      @media (max-width: 768px) {
+        width: 100%;
+      }
+
+      .list-group-item {
+        border: none;
+        padding: 1rem 0rem;
+        font-size: calc(0.8rem + 0.5vw);
+        border-radius: 0.75rem;
+        margin-bottom: 1rem;
+      }
+
+      .list-group-item.active {
+        z-index: 2;
+        color: black;
+        font-weight: bold;
+        background-color: #F4F4F8;
+        border-color: #fff;
+      }
+    }
+  
+    
+
+    .problem-tab-content {
+      @media (max-width: 768px) {
+        width: 100%;
+      }
+
+      .tab-content {
+        margin-top: 1.5rem;
+        border-radius: 0.75rem;
+        box-shadow: 4px 12px 30px 6px rgb(0 0 0 / 8%);
+        padding: 2rem 1rem;
+    
+        .list-title {
+          padding: 0.5rem 2rem;
+          margin-top: 1.5rem;
+          font-weight: bold;
+        }
+  
+        .list-content {
+          margin-bottom: 2rem;
+        }
+
+        h5 {
+          font-size: calc(1rem + 0.4vw);
+        }
+
+        .period {
+          display: flex;
+          justify-content: center;
+          @media (max-width: 768px) {
+            display: block;
+          }
+  
+          h5 {
+            padding: 0rem 1rem;
+            font-weight: bold;
+          }
+  
+          p {
+            margin-right: 10px;
+          }
+        }
+    
+        .form-option {
+          display: flex;
+          justify-content: space-evenly;
+          align-items: center;
+          padding: 1.5rem 0rem;
+          @media (max-width: 768px) {
+            display: block;
+          }
+    
+          .form-time {
+            display: flex;
+            justify-content: space-around;
+          }
+    
+          .form-metrics,
+          .form-time,
+          .data-file,
+          .solution-file {
+            @media (max-width: 768px) {
+              display: block;
+              width: 100%;
+              margin-bottom: 12px;
+            }
+          }
+        }
+    
+        .form-label {
+          font-weight: bold;
+          font-size: 1rem;
+          @media (max-width: 420px) {
+            display: block;
+          }
+        }
+
+        .btn {
+          display: block;
+          margin-left: auto;
+          padding: 0.5rem 1.5rem;
+          font-weight: bold;
+          font-size: 16px;
+          margin-bottom: 2rem;
+          @media (max-width: 420px) {
+            font-size: 14px;
+          }
+        }
+    
+        #data-file-input,
+        #solution-file-input {
+          position: absolute;
+          width: 0;
+          height: 0;
+          padding: 0;
+          overflow: hidden;
+          border: 0;
+        }
+
+        #csv-file-input,
+        #ipynb-file-input {
+          background-color: #F4F4F8;
+          border: none;
+          margin-bottom: 1rem;
+          line-height: 10;
+          color: #98A8B9;
+
+          &::file-selector-button {
+            color: transparent;
+            background-color: #F4F4F8;
+          }
+        }
+    
+        .file-upload-btn,
+        .file-download-btn {
+          display: inline-block;
+          padding: 5px 20px;
+          background: #0e1b49;
+          color: white;
+          border-radius: 50px;
+          cursor: pointer;
+          margin-left: 10px;
+        }
+    
+        .file-desc {
+          color: rgb(0 0 0 / 50%);
+          font-size: 14px;
+        }
+    
+        .upload-file-name {
+          margin-top: 0.75rem;
+          padding: 10px;
+          color: rgb(0 0 0 / 70%);
+          font-weight: bold;
+        }
+      }
+    }
+  }

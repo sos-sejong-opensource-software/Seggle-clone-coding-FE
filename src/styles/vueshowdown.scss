@@ -1,0 +1,25 @@
+.v-show-down {
+    a {
+        color: blue;
+    }
+    table {
+        td {
+            border: 1px solid black;
+        }
+        th {
+            padding: 5px;
+            &:not(:hover) {
+                pointer-events: none;
+            }
+        }
+        td {
+            padding: 5px;
+            &:not(:hover) {
+                pointer-events: none;
+            }
+        }
+    }
+    pre {
+        padding: 10px;
+    }
+}

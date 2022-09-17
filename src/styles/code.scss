@@ -1,0 +1,43 @@
+code {
+  background-color: black;
+  border-radius: 3px;
+  font-size: 90%;
+  padding: .2em .4em;
+}
+
+pre {
+  background-color: #202020;
+  margin: 0 0 1rem;
+}
+
+pre code {
+  background-color: transparent;
+  color: white;
+  font-size: 100%;
+  padding: .2em .4em;
+  font-size: 13px;
+}
+
+.syntax {
+  line-height: 1.2;
+}
+
+.highlight {
+  background-color: #202020;
+  border-radius: 3px;
+  margin: 0 0 1rem;
+  padding: 1em;
+
+  pre {
+    margin-bottom: 0;
+    overflow-x: auto;
+  }
+
+  .lineno {
+    display: inline-block;
+    padding: 0 .75rem 0 .25rem;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
+  }
+}
