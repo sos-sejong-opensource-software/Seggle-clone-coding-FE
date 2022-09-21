@@ -30,7 +30,7 @@
           <td>{{ proposal.id }}</td>
           <td>{{proposal.title}}</td>
           <td>{{ proposal.created_user }}</td>
-          <td>{{ setCreatedTime(proposal.created_time) }}</td>
+          <!-- <td>{{ setCreatedTime(proposal.created_time) }}</td> -->
         </tr>
       </tbody>
     </table>
@@ -63,12 +63,12 @@ export default {
   init(){
     this.getProposal(1)
   },
-  getProposal(page){
+  async getProposal(page){
     try{
-      const res = api.getProposal(page)
-      this.proposalList=res.data
+      const res =await api.getProposal(page)
+      this.proposalList=res.data.results
       console.log(res.data)
-      
+
     }catch(err){
       console.log(err)
     }

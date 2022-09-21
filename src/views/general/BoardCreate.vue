@@ -69,6 +69,19 @@ export default {
       2. 글을 수정할 경우, 기존의 글 내용을 가져온 후 수정한다.
       3. 글 등록 또는 수정이 완료되면 목록 페이지로 이동한다.
     */
+   init(){
+    if(this.mode==='create'){
+      this.getProposal()
+      this.title='글쓰기'
+    }
+    else{
+      this.title='글편집'
+    }
+   },
+   getProposal(){
+
+   }
+
   }
 }
 </script>
