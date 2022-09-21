@@ -1,0 +1,28 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:vue/essential",
+        "prettier"
+    ],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parserOptions": {
+        "ecmaVersion": 2018
+    },
+    "plugins": [
+        "vue"
+    ],
+    "rules": {
+        // multiword 에러 무시
+        "vue/multi-word-component-names": ["error", {
+          "ignores": ["default","Board"]
+        }]
+      }
+}
