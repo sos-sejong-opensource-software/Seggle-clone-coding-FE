@@ -30,7 +30,8 @@
           <td>{{ proposal.id }}</td>
           <td>{{proposal.title}}</td>
           <td>{{ proposal.created_user }}</td>
-          <!-- <td>{{ setCreatedTime(proposal.created_time) }}</td> -->
+           <td>{{ setCreatedTime(proposal.created_time) }}</td> 
+         <!-- <td>{{ proposal.created_time }}</td>  -->
         </tr>
       </tbody>
     </table>
@@ -63,6 +64,9 @@ export default {
   init(){
     this.getProposal(1)
   },
+  setCreatedTime(created_time){
+    return created_time.substr(0,10)
+  },
   async getProposal(page){
     try{
       const res =await api.getProposal(page)
@@ -79,6 +83,12 @@ export default {
      params:{mode:'create'}
 
 })
+   },
+   goProposalDetail(id){
+    this.$router.push({
+      name:'BoardDetail',
+      params:{id:id}
+    })
    }
   }
 }
