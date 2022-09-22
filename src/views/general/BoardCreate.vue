@@ -96,13 +96,13 @@ export default {
       }
     )
    },
-   submitProposal(){
+  async submitProposal(){
     try{
       const data  ={
         title:this.proposal.title ,
         context:this.proposal.context
       }
-      api.createProposal(data)
+      await api.createProposal(data)
       this.goBoardList()
       }catch(err){
         console.log(err)
