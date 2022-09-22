@@ -43,7 +43,7 @@
   </div>
 </template>
 <script>
-// import api from '@/api/index.js'
+import api from '@/api/index.js'
 export default {
   name: 'BoardCreate',
   data () {
@@ -71,19 +71,48 @@ export default {
     */
    init(){
     if(this.mode==='create'){
-      this.getProposal()
+    
       this.title='글쓰기'
     }
     else{
+        this.getProposal()
       this.title='글편집'
     }
    },
-   getProposal(){
+   async getProposal(){
+    try{
+      const res=await api.getProposalDetail(this.proposal.id)
+      this.proposal.title=res.data.title
+      this.proposal.context=res.data.context
+    }catch(err){
+      console.log(err)
+    }
+   },
+   goBoardList(){
+    this.$router.push(
+      {
+        name:'Board',
 
+      }
+    )
+   },
+   submitProposal(){
+    try{
+      const data  ={
+        title:this.proposal.title ,
+        context:this.proposal.context
+      }
+      api.createProposal(data)
+      this.goBoardList()
+      }catch(err){
+        console.log(err)
+      }
+    }
    }
 
+
   }
-}
+
 </script>
 <style lang="scss" scoped>
 .container {
