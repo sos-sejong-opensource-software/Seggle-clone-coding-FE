@@ -30,21 +30,23 @@
           <td>{{ proposal.id }}</td>
           <td>{{proposal.title}}</td>
           <td>{{ proposal.created_user }}</td>
-          <td>{{ setCreatedTime(proposal.created_time) }}</td>
+           <td>{{ setCreatedTime(proposal.created_time) }}</td> 
+         <!-- <td>{{ proposal.created_time }}</td>  -->
         </tr>
       </tbody>
     </table>
   </div>
 </template>
 <script>
-import api from '@/api/index.js'
+ import api from '@/api/index.js'
 
 export default {
   name: 'Board',
   data () {
     return {
       proposalList: [],
-      count: 0
+      count: 0,
+      page:1
     }
   },
   mounted () {
@@ -59,6 +61,35 @@ export default {
       2. 게시물을 클릭하면 해당 게시물 페이지로 이동한다
       3. 글쓰기 버튼을 클릭하면 글쓰기 페이지로 이동한다
     */
+  init(){
+    this.getProposal(1)
+  },
+  setCreatedTime(created_time){
+    return created_time.substr(0,10)
+  },
+  async getProposal(page){
+    try{
+      const res =await api.getProposal(page)
+      this.proposalList=res.data.results
+      console.log(res.data)
+
+    }catch(err){
+      console.log(err)
+    }
+  },
+   goCreateProposal () {
+    this.$router.push({
+     name :'BoardCreate',
+     params:{mode:'create'}
+
+})
+   },
+   goProposalDetail(id){
+    this.$router.push({
+      name:'BoardDetail',
+      params:{id:id}
+    })
+   }
   }
 }
 </script>

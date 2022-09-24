@@ -69,8 +69,50 @@ export default {
       2. 글을 수정할 경우, 기존의 글 내용을 가져온 후 수정한다.
       3. 글 등록 또는 수정이 완료되면 목록 페이지로 이동한다.
     */
+   init(){
+    if(this.mode==='create'){
+    
+      this.title='글쓰기'
+    }
+    else{
+        this.getProposal()
+      this.title='글편집'
+    }
+   },
+   async getProposal(){
+    try{
+      const res=await api.getProposalDetail(this.proposal.id)
+      this.proposal.title=res.data.title
+      this.proposal.context=res.data.context
+    }catch(err){
+      console.log(err)
+    }
+   },
+   goBoardList(){
+    this.$router.push(
+      {
+        name:'Board',
+
+      }
+    )
+   },
+  async submitProposal(){
+    try{
+      const data  ={
+        title:this.proposal.title ,
+        context:this.proposal.context
+      }
+      await api.createProposal(data)
+      this.goBoardList()
+      }catch(err){
+        console.log(err)
+      }
+    }
+   }
+
+
   }
-}
+
 </script>
 <style lang="scss" scoped>
 .container {
