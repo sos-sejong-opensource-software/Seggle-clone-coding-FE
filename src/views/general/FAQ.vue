@@ -19,7 +19,7 @@ export default {
   // components: VueShowdown,
   data () {
     return {
-      //
+      //faq 리스트
     }
   },
   created () {
@@ -29,7 +29,9 @@ export default {
     async getfaqList () {
       //faq 리스트 조회
       try {
+        
       } catch (error) {
+
       }
     }
   }
