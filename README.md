@@ -10,6 +10,10 @@
 
 - `Board.vue`
 - `BoardCreate.vue`
+- `Announcement.vue`
+- `AnnouncementDetail.vue`
+- `FAQ.vue`
+
 
 실행 방법
 ```

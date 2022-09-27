@@ -1,27 +1,16 @@
 <template>
   <div class="container">
     <header class="announcement-detail-header">
-      <button class="btn"
-              @click="goAnnouncementList">
-        <font-awesome-icon icon="angle-left" /> 목록
-      </button>
+      <!--공지사항(제목, 글 내용, 작성자) 정보 뿌리기-->
+
     </header>
     <section class="grid-section">
-      <span><h5>제목</h5></span>
-      <span class="title">{{content.title}}</span>
-      <span><h5>작성자</h5></span>
-      <span>{{ content.created_user }}</span>
-      <span><h5>작성일</h5></span>
-      <span>{{ content.created_time }}</span>
-      <span><h5>내용</h5></span>
-      <span class="content"><v-md-editor :model-value="content.context" mode="preview"></v-md-editor></span>
-      <!-- <span class="content"><VueShowdown class="v-show-down" :markdown="content.context"></VueShowdown></span> -->
     </section>
   </div>
 </template>
 <script>
 import api from '@/api/index.js'
-const Swal = require('sweetalert2')
+//const Swal = require('sweetalert2') //경고창 
 // import VueShowdown from 'vue-showdown'
 
 export default {
@@ -29,8 +18,8 @@ export default {
   // components: VueShowdown,
   data () {
     return {
-      announcementID: this.$route.params.id,
-      content: []
+      //
+      //
     }
   },
   created () {
@@ -42,29 +31,17 @@ export default {
   methods: {
     async getContent () {
       try {
-        const res = await api.getAnnouncementDetail(this.announcementID)
-        this.content = res.data
-        this.setCreatedTime()
+ 
       } catch (err) {
-        if (err.response.status === 404) {
-          await Swal.fire({
-            title: '잘못된 접근입니다.',
-            icon: 'error',
-            confirmButtonText: '확인'
-          }).then((result) => {
-            if (result.isConfirmed) {
-              this.$router.push({
-                name: 'Announcement'
-              })
-            }
-          })
-        }
+        //잘못된 접근의 경우
+
       }
     },
     setCreatedTime () {
-      this.content.created_time = this.content.created_time.slice(0, 10)
+      //시간에 대한 문자열 처리
     },
     goAnnouncementList () {
+      //공지사항 리스트 페이지로 가기
       this.$router.push({ name: 'Announcement' })
     }
   }

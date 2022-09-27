@@ -5,41 +5,8 @@
     </header>
 
     <div class="accordion py-3" id="accordionExample">
-      <div v-for="(faq, index) in faqList"
-           :key="index"
-           class="accordion-item">
-        <h2 class="accordion-header"
-            :id="`heading${faq.id}`">
-          <button
-            class="accordion-button collapsed"
-            type="button"
-            data-bs-toggle="collapse"
-            :data-bs-target="`#collapse${faq.id}`"
-            aria-expanded="false"
-            :aria-controls="`collapse${faq.id}`"
-          >
-            Q. {{ faq.question }}
-          </button>
-        </h2>
-        <div
-          :id="`collapse${faq.id}`"
-          class="accordion-collapse collapse"
-          :aria-labelledby="`heading${faq.id}`"
-          data-bs-parent="#accordionExample"
-        >
-          <div class="accordion-body">
-            <span><v-md-editor :model-value="faq.answer" mode="preview"></v-md-editor></span>
-            <!-- <span><VueShowdown class="v-show-down" :markdown="faq.answer" :options= "{
-              emoji: true,
-              tables: true,
-              parseImgDimensions: true,
-              omitExtraWLInCodeBlocks: true,
-              simpleLineBreaks: true,
-              splitAdjacentBlockquotes: true
-            }"></VueShowdown></span> -->
-          </div>
-        </div>
-      </div>
+          <!-- bootstrap 공식 문서의 acccordion을 참고해주세요! -->
+          <!-- https://getbootstrap.com/docs/5.2/components/accordion/#how-it-works -->
     </div>
   </div>
 </template>
@@ -52,7 +19,7 @@ export default {
   // components: VueShowdown,
   data () {
     return {
-      faqList: []
+      //
     }
   },
   created () {
@@ -60,11 +27,9 @@ export default {
   },
   methods: {
     async getfaqList () {
+      //faq 리스트 조회
       try {
-        const res = await api.getFAQ()
-        this.faqList = res.data
       } catch (error) {
-        console.log(error)
       }
     }
   }
