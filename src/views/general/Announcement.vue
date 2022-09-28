@@ -92,7 +92,7 @@ export default {
     async getAnnouncement (page) {
       try {
         //공지사항 조회
-        const res=await api.getAnnouncement (page)
+        const res=await api.getAnnouncement (page,this.keyword)
         this.announceList=res.data.results
         console.log(res.data)
         
