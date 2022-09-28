@@ -42,7 +42,7 @@
 <script>
 import api from '@/api/index.js'
 import Pagination from '@/components/Pagination.vue'
-import AnnouncementDetailVue from './AnnouncementDetail.vue'
+// import AnnouncementDetailVue from './AnnouncementDetail.vue'
 
 export default {
   name: 'Announcement',
