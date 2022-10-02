@@ -21,8 +21,8 @@
     ],
     "rules": {
         // multiword 에러 무시
-        "vue/multi-word-component-names": ["error", {
-          "ignores": ["default","Board"]
-        }]
+        // ->0쓰면 component 일일이 다 입력 안해도됨
+        "vue/multi-word-component-names": 0
+        
       }
 }

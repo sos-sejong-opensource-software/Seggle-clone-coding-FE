@@ -13,9 +13,28 @@
         />
       </form>
     </header>
+    <table class="table">
+      <thead>
+          <tr>
+            <th class="col-lg-1 col-md-2 tableId" scope="col">ID</th>
+            <th class="title-col" scope="col">제목</th>
+            <th class="col-lg-2" scope="col">작성일</th>
+            <th class="col-lg-1 col-md-2" scope="col">작성자</th>
+          </tr>
+      </thead>
 
-    <div class="table-div">
-    </div>
+
+
+    <tr class="table-div" 
+    v-for="announce in announceList" :key="announce" 
+    @click="goAnnouncementDetail(announce.id)">
+    <td>{{announce.id}}</td>
+    <td>{{announce.title}}</td>
+    <td>{{setCreatedtime(announce.created_time)}}</td>
+    <td>관리자</td>
+    
+    </tr>
+    </table>
     <Pagination :pagination="pageValue"
                 @get-page="getPage"/>
   </div>
@@ -23,6 +42,7 @@
 <script>
 import api from '@/api/index.js'
 import Pagination from '@/components/Pagination.vue'
+// import AnnouncementDetailVue from './AnnouncementDetail.vue'
 
 export default {
   name: 'Announcement',
@@ -34,6 +54,7 @@ export default {
       //table에서 불러와야 하는 리스트를 써주세요
       //
       //
+      announceList:[],
       keyword: '',
       pageValue: [],
       currentPage: 1,
@@ -64,10 +85,16 @@ export default {
         this.total = parseInt((this.count - 1) / 15) + 1
       }
     },
+    setCreatedtime(time){
+      return time.substr(0,10)
+    },
     //
     async getAnnouncement (page) {
       try {
         //공지사항 조회
+        const res=await api.getAnnouncement (page,this.keyword)
+        this.announceList=res.data.results
+        console.log(res.data)
         
       } catch (error) {
         console.log(error)
@@ -75,13 +102,18 @@ export default {
     },
     goAnnouncementDetail (announcementID) {
       //공지사항 세부사항 페이지로 이동
-    }
-  },
-  watch: {
+      this.$router.push({
+        name:'AnnouncementDetail',
+        params:{id:announcementID}
+      })
+      }
+    },
+   watch: {
     keyword () {
       this.getAnnouncement(1)
     }
   }
+ 
 }
 </script>
 

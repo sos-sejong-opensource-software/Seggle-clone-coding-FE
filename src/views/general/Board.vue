@@ -39,6 +39,7 @@
 </template>
 <script>
  import api from '@/api/index.js'
+//  import Pagination from '@/components/Pagination/vue'
 
 export default {
   name: 'Board',
@@ -48,6 +49,9 @@ export default {
       count: 0,
       page:1
     }
+  },
+  components(){
+    // Pagination
   },
   mounted () {
     this.init()
