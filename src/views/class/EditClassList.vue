@@ -30,23 +30,19 @@
           <td>{{ classes.semester }}</td>
           <td class="class-name">{{ classes.name }}</td>
           <td>
-            <button class="edit-btn"
-                    @click="showModal = true;
-                            rowIndex = i;">
+            <button
+              class="edit-btn"
+              @click="
+                showModal = true;
+                rowIndex = i;
+              "
+            >
               <font-awesome-icon icon="pen" />
             </button>
-            <ModalClassList
-              v-if="showModal"
-              @close="showModal = false"
-              mode="수업 편집"
-              :classID="classList[rowIndex].id"
-              :semester="classList[rowIndex].semester"
-              :title="classList[rowIndex].name"
-            />
+            <!-- ModalClassList component를 사용해주세요. -->
           </td>
           <td>
-            <button class="delete-btn"
-                    @click="removeClass(classes.id)">
+            <button class="delete-btn" @click="removeClass(classes.id)">
               <font-awesome-icon icon="trash-can" />
             </button>
           </td>
@@ -57,50 +53,33 @@
 </template>
 
 <script>
-import api from '@/api/index.js'
-import ModalClassList from '@/components/ModalClassList.vue'
-const Swal = require('sweetalert2')
+// import api from '@/api/index.js';
+// import ModalClassList from '@/components/ModalClassList.vue';
+const Swal = require('sweetalert2');
 export default {
   name: 'EditClassList',
   components: {
-    ModalClassList
+    // component를 어떤 식으로 사용하는지 확인해주세요.
+    // template에서 해당 컴포넌트를 사용하고 밑에 주석처리를 풀고 실행해주세요.
+    // ModalClassList
   },
-  data () {
+  data() {
     return {
       classList: [],
       checkList: [],
       showModal: false
-    }
+    };
   },
-  mounted () {
-    this.getClassList()
+  mounted() {
+    this.getClassList();
   },
   methods: {
-    async getClassList () {
+    // 필요한 함수들을 추가적으로 정의해서 사용해주세요.
+    // 작성 후 어떤 동작을 하는 함수인지도 주석으로 달아주세요.
+    // 밑에 지우지 않은 함수들도 꼭 확인은 해주세요!
+    async editClassList() {
       try {
-        const res = await api.getClassList()
-        this.classList = res.data
-        this.alreadyChecked()
-      } catch (err) {
-        console.log(err)
-      }
-    },
-    alreadyChecked () {
-      for (const classes of this.classList) {
-        if (classes.is_show) {
-          this.checkList.push(classes.id)
-        }
-      }
-    },
-    async editClassList () {
-      try {
-        const data = []
-        for (const checkedClass of this.checkList) {
-          const item = {}
-          item.class_id = checkedClass
-          data.push(item)
-        }
-        await api.editClassList(data)
+        // 동작상 필요한 내용을 추가적으로 작성해주세요.
         Swal.fire({
           title: '변경사항이 저장되었습니다.',
           icon: 'success',
@@ -111,14 +90,14 @@ export default {
           }
         }).then((result) => {
           if (result.isConfirmed) {
-            this.$router.push({ name: 'ClassList' })
+            this.$router.push({name: 'ClassList'});
           }
-        })
+        });
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
     },
-    async removeClass (classID) {
+    async removeClass(classID) {
       try {
         await Swal.fire({
           title: '삭제하시겠습니까?',
@@ -128,26 +107,24 @@ export default {
           cancelButtonText: '취소'
         }).then((result) => {
           if (result.isConfirmed) {
-            api.removeClass(classID)
-            Swal.fire(
-              {
-                title: '삭제되었습니다.',
-                icon: 'success',
-                confirmButtonText: '확인'
-              }
-            ).then((result) => {
+            api.removeClass(classID);
+            Swal.fire({
+              title: '삭제되었습니다.',
+              icon: 'success',
+              confirmButtonText: '확인'
+            }).then((result) => {
               if (result.isConfirmed) {
-                this.$router.push({ name: 'ClassList' })
+                this.$router.push({name: 'ClassList'});
               }
-            })
+            });
           }
-        })
+        });
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
     }
   }
-}
+};
 </script>
 
 <style scoped lang="scss">

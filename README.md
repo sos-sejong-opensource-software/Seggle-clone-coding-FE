@@ -1,6 +1,7 @@
 # Seggle 클론코딩 - 프론트엔드
 
 ## 📝 클론코딩 일지
+
 <details>
 <summary> [220915] 건의게시판 목록, 건의게시판 게시글 등록 페이지</summary>
 
@@ -10,18 +11,36 @@
 
 - `Board.vue`
 - `BoardCreate.vue`
+</details>
+
+<details>
+<summary> [220926] 공지사항, 공지사항 세부, FAQ 페이지</summary>
+
 - `Announcement.vue`
 - `AnnouncementDetail.vue`
 - `FAQ.vue`
 
+</details>
 
-실행 방법
+<details>
+<summary> [221003] 수업 list, 수업 list 수정, modalClassList(component)</summary>
+
+주석으로 쓰여있는 곳에 필요한 HTML, JS 코드를 완성해주세요!
+
+- `EditCassList.vue`
+- `ClassList.vue`
+- `ModalClassList.vue`
+
+</details>
+<br/>
+
+## 📌실행 방법
+
 ```
 $ git clone https://github.com/sos-sejong-opensource-software/Seggle-clone-coding-FE.git
 $ npm install
 $ npm run serve
 ```
-</details>
 
 <br />
 
