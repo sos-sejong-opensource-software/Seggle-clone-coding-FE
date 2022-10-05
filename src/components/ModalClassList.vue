@@ -75,7 +75,7 @@ export default {
   },
   mounted() {
     this.getYear();
-    this.changeEditMode();
+    // this.changeEditMode();
   },
   methods: {
     // 필요한 함수들을 정의해서 사용해주세요.
@@ -116,7 +116,7 @@ export default {
         }).then((result) => {
           if (result.isConfirmed) {
             // alert창의 확인버튼을 눌렀을 경우 어느 라우터로 이동해야하는지 작성해주세요.
-            this.$router.push({
+            this.$router.go({
               name:'ClassList'
             })
           }
@@ -144,7 +144,7 @@ export default {
         }).then((result) => {
           if (result.isConfirmed) {
             // alert창의 확인버튼을 눌렀을 경우 어느 라우터로 이동해야하는지 작성해주세요.
-            this.$router.push({
+            this.$router.go({
               name:'EditClassList'
             })
           }
