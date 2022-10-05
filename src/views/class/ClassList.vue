@@ -7,7 +7,8 @@
         <button class="btn" @click="showModal = true">수업 생성</button>
         <!-- ModalClassList를 사용해주세요 -->
         <ModalClassList
-        v-if="showModal" @close="showModal=false"/>
+        v-if="showModal" @close="showModal=false" 
+        mode="수업 생성"/>
       </div>
     </header>
 
@@ -76,10 +77,10 @@ export default {
         console.log(err)
       }
     },
-    classDetail(classId){
+    classDetail(classID){
       this.$router.push({
         name:'ClassContest',
-        params:{id:classId}
+        params:{classID:classID}
       })
     },
     goEditClass(){

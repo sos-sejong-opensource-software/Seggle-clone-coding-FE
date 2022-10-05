@@ -3,7 +3,7 @@
     <header>
       <h1 id="title">수업 및 시험</h1>
       <button class="btn" @click="editClassList">저장</button>
-    </header>
+    </header> 
 
     <table class="table">
       <thead>
@@ -53,7 +53,7 @@
 </template>
 
 <script>
-// import api from '@/api/index.js';
+import api from '@/api/index.js';
 // import ModalClassList from '@/components/ModalClassList.vue';
 const Swal = require('sweetalert2');
 export default {
