@@ -75,7 +75,7 @@ export default {
   },
   mounted() {
     this.getYear();
-    // this.changeEditMode();
+    this.changeEditMode();
   },
   methods: {
     // 필요한 함수들을 정의해서 사용해주세요.
@@ -83,6 +83,13 @@ export default {
       const date =new Date()
       const year =date.getFullYear()
       this.classYear=year
+    },
+    changeEditMode(){
+      if(this.mode==='수업 편집'){
+        this.classTitle=this.title
+        this.classSemester=this.semester
+        this.placeholder=this.title
+      }
     },
 
     submitForm(){

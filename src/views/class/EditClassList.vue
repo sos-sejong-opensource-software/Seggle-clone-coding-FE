@@ -41,7 +41,10 @@
             </button>
             <!-- ModalClassList component를 사용해주세요. -->
             <ModalClassList v-if="showModal" @close="showModal = false" 
-            mode="수업 편집"/>
+            mode="수업 편집"
+            :classID="classList[rowIndex].id"
+            :semester="classList[rowIndex].semester"
+            :title="classList[rowIndex].name"/>
           </td>
           <td>
             <button class="delete-btn" @click="removeClass(classes.id)">
@@ -83,8 +86,17 @@ export default {
       try{
       const res=await api.getClassList()
       this.classList=res.data
+      // console.log(this.classList)
+      this.checked()
       }catch(err){
         console.log(err)
+      }
+    },
+    checked(){
+      for(let classes of this.classList){
+        if(classes.is_show){
+          this.checkList.push(classes)
+        }
       }
     },
 
