@@ -3,7 +3,7 @@
     <header>
       <h1 id="title">수업 및 시험</h1>
       <button class="btn" @click="editClassList">저장</button>
-    </header>
+    </header> 
 
     <table class="table">
       <thead>
@@ -40,6 +40,11 @@
               <font-awesome-icon icon="pen" />
             </button>
             <!-- ModalClassList component를 사용해주세요. -->
+            <ModalClassList v-if="showModal" @close="showModal = false" 
+            mode="수업 편집"
+            :classID="classList[rowIndex].id"
+            :semester="classList[rowIndex].semester"
+            :title="classList[rowIndex].name"/>
           </td>
           <td>
             <button class="delete-btn" @click="removeClass(classes.id)">
@@ -53,15 +58,15 @@
 </template>
 
 <script>
-// import api from '@/api/index.js';
-// import ModalClassList from '@/components/ModalClassList.vue';
+import api from '@/api/index.js';
+import ModalClassList from '@/components/ModalClassList.vue';
 const Swal = require('sweetalert2');
 export default {
   name: 'EditClassList',
   components: {
     // component를 어떤 식으로 사용하는지 확인해주세요.
     // template에서 해당 컴포넌트를 사용하고 밑에 주석처리를 풀고 실행해주세요.
-    // ModalClassList
+    ModalClassList
   },
   data() {
     return {
@@ -77,6 +82,25 @@ export default {
     // 필요한 함수들을 추가적으로 정의해서 사용해주세요.
     // 작성 후 어떤 동작을 하는 함수인지도 주석으로 달아주세요.
     // 밑에 지우지 않은 함수들도 꼭 확인은 해주세요!
+    async getClassList(){
+      try{
+      const res=await api.getClassList()
+      this.classList=res.data
+      // console.log(this.classList)
+      this.checked()
+      }catch(err){
+        console.log(err)
+      }
+    },
+    checked(){
+      for(let classes of this.classList){
+        if(classes.is_show){
+          this.checkList.push(classes)
+        }
+      }
+    },
+
+
     async editClassList() {
       try {
         // 동작상 필요한 내용을 추가적으로 작성해주세요.
