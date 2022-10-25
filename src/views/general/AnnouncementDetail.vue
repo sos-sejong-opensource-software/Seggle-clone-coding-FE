@@ -1,10 +1,24 @@
 <template>
   <div class="container">
     <header class="announcement-detail-header">
-      <!--공지사항(제목, 글 내용, 작성자) 정보 뿌리기-->
-
+     
+      <button class="button"
+      @click="goAnnouncementList">목록</button>
     </header>
     <section class="grid-section">
+       <!--공지사항(제목, 글 내용, 작성자) 정보 뿌리기-->
+      <span><h5>제목 </h5></span>
+      <span class="title">{{this.title}}</span>
+
+      <span><h5>작성자 </h5></span>
+      <span >{{this.created_user}}</span>
+
+      <span><h5>작성일 </h5></span>
+      <span>{{setCreatedTime(this.created_time)}}</span>
+
+     <span> <h5>내용</h5></span>
+     <span class="content">{{this.context}}</span>
+
     </section>
   </div>
 </template>
@@ -20,25 +34,38 @@ export default {
     return {
       //
       //
+      announceID:this.$route.params.id,
+      title:'',
+      context:'',
+      created_time:'',
+      created_user:''
+
     }
   },
   created () {
     this.getContent()
   },
   beforeUpdate () {
-    this.setCreatedTime()
+    this.setCreatedTime(this.created_time)
   },
   methods: {
     async getContent () {
       try {
+        const res=await api. getAnnouncementDetail (this.announceID)
+        this.title=res.data.title
+        this.context=res.data.context
+        this.created_time=res.data.created_time
+        this.created_user=res.data.created_user
+        console.log(res.data)
  
       } catch (err) {
         //잘못된 접근의 경우
 
       }
     },
-    setCreatedTime () {
+    setCreatedTime (time) {
       //시간에 대한 문자열 처리
+      return time.substr(0,10)
     },
     goAnnouncementList () {
       //공지사항 리스트 페이지로 가기

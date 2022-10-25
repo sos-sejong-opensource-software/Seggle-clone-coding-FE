@@ -4,7 +4,6 @@
 
 <details>
 <summary> [220915] 건의게시판 목록, 건의게시판 게시글 등록 페이지</summary>
-<summary> [221025] Admin 페이지(AdminProblem 제외)</summary>
 
 <b>반드시 브랜치 생성 후 개발 진행해주세요!</b>
 
@@ -12,19 +11,45 @@
 
 - `Board.vue`
 - `BoardCreate.vue`
+</details>
+
+<details>
+<summary> [220926] 공지사항, 공지사항 세부, FAQ 페이지</summary>
+
 - `Announcement.vue`
 - `AnnouncementDetail.vue`
 - `FAQ.vue`
 
-실행 방법
+</details>
+
+<details>
+<summary> [221003] 수업 list, 수업 list 수정, modalClassList(component)</summary>
+
+주석으로 쓰여있는 곳에 필요한 HTML, JS 코드를 완성해주세요!
+
+- `EditCassList.vue`
+- `ClassList.vue`
+- `ModalClassList.vue`
+
+</details>
+<details>
+<summary> [221025] Admin 페이지(AdminProblem 제외)</summary>
+
+`AdminProblem.vue`를 제외한 나머지 Admin 페이지를 완성해주세요!
+
+- `<tbody>` 부분의 HTML 코드를 작성해주세요!
+- 주석을 참고하여 JS 코드를 작성해주세요!
+
+</details>
+<br/>
+
+## 📌실행 방법
 
 ```
 $ git clone https://github.com/sos-sejong-opensource-software/Seggle-clone-coding-FE.git
 $ npm install
 $ npm run serve
 ```
-
-</details>
 
 <br />
 

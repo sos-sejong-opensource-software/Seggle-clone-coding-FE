@@ -4,10 +4,29 @@
       <h1 id="title">FAQ</h1>
     </header>
 
-    <div class="accordion py-3" id="accordionExample">
+    <div    class="accordion py-3" id="accordionExample">
           <!-- bootstrap 공식 문서의 acccordion을 참고해주세요! -->
           <!-- https://getbootstrap.com/docs/5.2/components/accordion/#how-it-works -->
+    
+      <div v-for="(faq,i) in faqList" :key="i" class="accordion-item">
+       <h2 class="accordion-header" id="headingOne">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+           Q. {{ faq.question}}
+        </button>
+       </h2>
+       <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+       <div class="accordion-body">
+        <p>A. {{faq.answer}}</p>
+       </div>
+       </div>
+      </div>
+    
+    
+    
     </div>
+
+
+
   </div>
 </template>
 
@@ -20,6 +39,7 @@ export default {
   data () {
     return {
       //faq 리스트
+      faqList:[]
     }
   },
   created () {
@@ -29,9 +49,12 @@ export default {
     async getfaqList () {
       //faq 리스트 조회
       try {
-        
-      } catch (error) {
+        const res=await api.getFAQ ()
+        this.faqList=res.data
+        console.log(this.faqList)
 
+      } catch (error) {
+        console.log(error)
       }
     }
   }
