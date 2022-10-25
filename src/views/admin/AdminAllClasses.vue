@@ -26,20 +26,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-if="count === 0">
-            <td colspan="5">등록된 수업이 없습니다.</td>
-          </tr>
-          <tr
-            v-for="Class in classList"
-            :key="Class"
-            @click="goClass(Class.id)"
-          >
-            <th scope="row">{{ Class.id }}</th>
-            <td>{{ Class.year }}</td>
-            <td>{{ Class.semester }}</td>
-            <td>{{ Class.name }}</td>
-            <td>{{ Class.created_user }}</td>
-          </tr>
+          <!-- 내부에 들어갈 코드를 작성해주세요! -->
         </tbody>
       </table>
     </div>
@@ -48,59 +35,38 @@
 </template>
 
 <script>
-import api from '@/api/index.js'
-import Pagination from '../../components/Pagination.vue'
+// import api from "@/api/index.js";
+// import Pagination from '../../components/Pagination.vue'
 
 export default {
-  components: { Pagination },
-  name: 'AdminAllClasses',
-  data () {
+  // components: { Pagination },
+  name: "AdminAllClasses",
+  data() {
     return {
-      keyword: '',
+      keyword: "",
       count: 0,
       classList: [],
       currentPage: 1,
-      PageValue: []
-    }
+      PageValue: [],
+    };
   },
-  mounted () {
-    this.init()
+  mounted() {
+    this.init();
   },
   methods: {
     /* mount 하면 1페이지 불러오기 */
-    init () {
-      this.getClassList(1)
-    },
+    init() {},
     /* 페이지값으로 전체수업 리스트 불러오기 */
-    async getClassList (page) {
-      try {
-        this.currentPage = page
-        this.PageValue = []
-        const res = await api.getAdminClassList(page, this.keyword)
-        this.count = res.data.count
-        this.PageValue.push({
-          count: this.count,
-          currentPage: this.currentPage
-        })
-        this.classList = res.data.results
-      } catch (err) {
-        console.log(err)
-      }
-    },
+    async getClassList(page) {},
     /* 해당 수업으로 이동 */
-    goClass (classID) {
-      this.$router.push({
-        name: 'ClassContest',
-        params: { classID: classID }
-      })
-    }
+    goClass(classID) {},
   },
   watch: {
-    keyword () {
-      this.getClassList(1)
-    }
-  }
-}
+    keyword() {
+      this.getClassList(1);
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

@@ -34,7 +34,10 @@
         aria-hidden="true"
         data-bs-backdrop="static"
       >
-        <div class="modal-dialog modal-dialog-centered" data-bs-backdrop="static">
+        <div
+          class="modal-dialog modal-dialog-centered"
+          data-bs-backdrop="static"
+        >
           <div class="modal-content">
             <div class="modal-header">
               <h5 v-if="createMode">공지사항 생성</h5>
@@ -125,71 +128,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-if="count === 0">
-            <td colspan="8">등록된 공지사항이 없습니다.</td>
-          </tr>
-          <tr
-            v-else
-            v-for="announcement in announcementList"
-            :key="announcement"
-          >
-            <th scope="row">{{ announcement.id }}</th>
-            <td class="title">{{ announcement.title }}</td>
-            <td>{{ announcement.created_time }}</td>
-            <td>{{ announcement.last_modified }}</td>
-            <td>
-              <div style="display: inline-block" class="form-check form-switch">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  id="flexSwitchCheckChecked"
-                  v-model="announcement.visible"
-                  @change="
-                    changeSwitch(
-                      announcement.id,
-                      announcement.visible,
-                      announcement.important
-                    )
-                  "
-                />
-              </div>
-            </td>
-            <td>
-              <div style="display: inline-block" class="form-check form-switch">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  id="flexSwitchCheckChecked"
-                  v-model="announcement.important"
-                  @change="
-                    changeSwitch(
-                      announcement.id,
-                      announcement.visible,
-                      announcement.important
-                    )
-                  "
-                />
-              </div>
-            </td>
-            <td scope="row">
-              <button
-                class="edit-btn"
-                data-bs-toggle="modal"
-                data-bs-target="#announceModal"
-                @click="openAnnouncement(announcement.id)"
-              >
-                <font-awesome-icon icon="pen" />
-              </button>
-            </td>
-            <td scope="row">
-              <button
-                class="delete-btn"
-                @click="deleteAnnouncement(announcement.id)"
-              >
-                <font-awesome-icon icon="trash-can" />
-              </button>
-            </td>
-          </tr>
+          <!-- 내부에 들어갈 코드를 작성해주세요! -->
         </tbody>
       </table>
     </div>
@@ -198,158 +137,57 @@
 </template>
 
 <script>
-import api from '@/api/index.js'
-import Pagination from '@/components/Pagination.vue'
-import { formatTime } from '@/utils/time.js'
-const Swal = require('sweetalert2')
+import api from "@/api/index.js";
+import Pagination from "@/components/Pagination.vue";
+import { formatTime } from "@/utils/time.js";
+const Swal = require("sweetalert2");
 
 export default {
-  name: 'AdminAnnouncement',
+  name: "AdminAnnouncement",
   components: {
-    Pagination
+    Pagination,
   },
-  data () {
+  data() {
     return {
-      currentAnnouncementID: '',
+      currentAnnouncementID: "",
       createMode: true,
-      announcementTitle: '',
-      announcementContext: '',
+      announcementTitle: "",
+      announcementContext: "",
       announcementVisible: true,
       announcementImportant: false,
       announcementList: [],
-      keyword: '',
+      keyword: "",
       count: 0,
       currentPage: 1,
-      PageValue: []
-    }
+      PageValue: [],
+    };
   },
-  mounted () {
-    this.init()
+  mounted() {
+    this.init();
   },
   methods: {
-    init () {
-      this.getAnnouncementList(1)
-    },
-    getPage (page) {
-      this.getAnnouncementList(page)
+    /* mount 하면 1페이지 불러오기 */
+    init() {},
+    getPage(page) {
+      this.getAnnouncementList(page);
     },
     /* 공지사항 리스트 불러오기 */
-    async getAnnouncementList (page) {
-      try {
-        const res = await api.getAnnouncementList(page, this.keyword)
-        this.currentPage = page
-        this.PageValue = []
-        this.count = res.data.count
-        this.PageValue.push({
-          count: res.data.count,
-          currentPage: this.currentPage
-        })
-        this.announcementList = res.data.results.reverse()
-        for (const announcement of this.announcementList) {
-          announcement.created_time = formatTime(announcement.created_time)
-          announcement.last_modified = formatTime(announcement.last_modified)
-        }
-      } catch (err) {
-        console.log(err)
-      }
-    },
+    async getAnnouncementList(page) {},
     /* 공지사항 삭제 */
-    async deleteAnnouncement (announcementID) {
-      try {
-        await Swal.fire({
-          title: '삭제하시겠습니까?',
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonText: '확인',
-          cancelButtonText: '취소'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            api.deleteAnnouncement(announcementID)
-            Swal.fire(
-              {
-                title: '삭제되었습니다.',
-                icon: 'success',
-                confirmButtonText: '확인'
-              }
-            ).then((result) => {
-              if (result.isConfirmed) {
-                api.getAnnouncementList(1, this.keyword)
-                  .then(res => {
-                    if (this.currentPage !== 1 && res.data.count / 15 < this.currentPage && res.data.count % 15 === 0) {
-                      this.currentPage = this.currentPage - 1
-                    }
-                    this.getAnnouncementList(this.currentPage)
-                  })
-              }
-            })
-          }
-        })
-      } catch (err) {
-        console.log(err)
-      }
-    },
+    async deleteAnnouncement(announcementID) {},
     /* 공지사항 열람 */
-    async openAnnouncement (announcementID) {
-      try {
-        if (typeof announcementID === 'undefined') {
-          this.createMode = true
-          this.currentAnnouncementID = ''
-          this.announcementTitle = ''
-          this.announcementContext = ''
-          this.announcementVisible = true
-          this.announcementImportant = false
-        } else {
-          this.currentAnnouncementID = announcementID
-          this.createMode = false
-          const res = await api.editAnnouncement(announcementID)
-          this.announcementTitle = res.data.title
-          this.announcementContext = res.data.context
-          this.announcementVisible = res.data.visible
-          this.announcementImportant = res.data.important
-        }
-      } catch (err) {
-        console.log(err)
-      }
-    },
+    async openAnnouncement(announcementID) {},
     /* 공지사항 작성 후 제출 */
-    async submitAnnouncement () {
-      try {
-        const data = {
-          title: this.announcementTitle,
-          context: this.announcementContext,
-          important: this.announcementImportant,
-          visible: this.announcementVisible
-        }
-        /* 공지사항 수정 or 생성 */
-        if (this.currentAnnouncementID === '') {
-          await api.submitAnnouncement(data)
-        } else {
-          await api.submitEditAnnouncement(this.currentAnnouncementID, data)
-        }
-        this.getAnnouncementList(this.currentPage)
-      } catch (err) {
-        console.log(err)
-      }
-    },
+    async submitAnnouncement() {},
     /* 공지사항 공개, 중요 여부 설정 */
-    async changeSwitch (announcementID, visible, important) {
-      try {
-        const data = {
-          visible: visible,
-          important: important
-        }
-        await api.changeAnnouncementSwitch(announcementID, data)
-      } catch (err) {
-        console.log(err)
-      }
-    }
+    async changeSwitch(announcementID, visible, important) {},
   },
   watch: {
-    keyword () {
-      this.getAnnouncementList(1)
-    }
-  }
-}
+    keyword() {
+      this.getAnnouncementList(1);
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

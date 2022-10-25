@@ -26,20 +26,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-if="count === 0">
-            <td colspan="5">등록된 문제가 없습니다.</td>
-          </tr>
-          <tr v-for="problem in problemList" :key="problem">
-            <th @click="goProblemDetail(problem.id)" scope="row">{{ problem.id }}</th>
-            <td @click="goProblemDetail(problem.id)">{{ problem.title }}</td>
-            <td @click="goProblemDetail(problem.id)">{{ problem.created_time }}</td>
-            <td @click="goProblemDetail(problem.id)">{{ problem.created_user }}</td>
-            <td scope="row">
-              <button class="delete-btn" @click="deleteProblem(problem.id)">
-                <font-awesome-icon icon="trash-can" />
-              </button>
-            </td>
-          </tr>
+          <!-- 내부에 들어갈 코드를 작성해주세요! -->
         </tbody>
       </table>
     </div>
@@ -48,102 +35,47 @@
 </template>
 
 <script>
-import api from '@/api/index.js'
-import Pagination from '../../components/Pagination.vue'
-import { formatTime } from '@/utils/time.js'
-const Swal = require('sweetalert2')
+// import api from "@/api/index.js";
+import Pagination from "../../components/Pagination.vue";
+import { formatTime } from "@/utils/time.js";
+const Swal = require("sweetalert2");
 
 export default {
   components: { Pagination },
-  name: 'AdminAllProblems',
-  data () {
+  name: "AdminAllProblems",
+  data() {
     return {
-      keyword: '',
+      keyword: "",
       count: 0,
       problemList: [],
       currentPage: 1,
-      PageValue: []
-    }
+      PageValue: [],
+    };
   },
-  mounted () {
-    this.init()
+  mounted() {
+    this.init();
   },
   methods: {
-    init () {
-      this.getProblemList(1)
+    /* mount 하면 1페이지 불러오기 */
+    init() {
+      this.getProblemList(1);
     },
-    getPage (page) {
-      this.getProblemList(page)
+    getPage(page) {
+      this.getProblemList(page);
     },
     /* 전체문제 리스트 불러오기 */
-    async getProblemList (page) {
-      try {
-        const res = await api.getAdminProblemList(page, this.keyword)
-        this.currentPage = page
-        this.count = res.data.count
-        this.PageValue = []
-        this.PageValue.push({
-          count: this.count,
-          currentPage: this.currentPage
-        })
-        this.problemList = res.data.results
-        for (const problem of this.problemList) {
-          problem.created_time = formatTime(problem.created_time)
-        }
-      } catch (err) {
-        console.log(err)
-      }
-    },
+    async getProblemList(page) {},
     /* 문제 삭제 */
-    async deleteProblem (problemID) {
-      try {
-        await Swal.fire({
-          title: '삭제하시겠습니까?',
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonText: '확인',
-          cancelButtonText: '취소'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            api.deleteProblem(problemID)
-            Swal.fire(
-              {
-                title: '삭제되었습니다.',
-                icon: 'success',
-                confirmButtonText: '확인'
-              }
-            ).then((result) => {
-              if (result.isConfirmed) {
-                api.getProblemList(1, this.keyword)
-                  .then(res => {
-                    if (this.currentPage !== 1 && res.data.count / 15 < this.currentPage && res.data.count % 15 === 0) {
-                      this.currentPage = this.currentPage - 1
-                    }
-                    this.getProblemList(this.currentPage)
-                  })
-              }
-            })
-          }
-        })
-      } catch (err) {
-        console.log(err)
-      }
-    },
-    goProblemDetail (problemID) {
-      this.$router.push({
-        name: 'AdminProblemDetail',
-        params: {
-          problemID: problemID
-        }
-      })
-    }
+    async deleteProblem(problemID) {},
+    /* 선택한 문제로 이동 */
+    goProblemDetail(problemID) {},
   },
   watch: {
-    keyword () {
-      this.getProblemList(1)
-    }
-  }
-}
+    keyword() {
+      this.getProblemList(1);
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

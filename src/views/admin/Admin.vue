@@ -1,23 +1,21 @@
 <template>
   <div class="container">
     <div class="row">
-      <AdminSideBar class="col-md-2 py-4 side-bar"></AdminSideBar>
-      <!--밑에 페이지가 뿌려짐-->
-      <router-view class="col-md-10 col-xs-10 py-4"></router-view>
+      <!-- 내부에 들어갈 코드를 작성해주세요! -->
     </div>
   </div>
 </template>
 
 <script>
-import AdminSideBar from '@/components/AdminSideBar.vue'
+// import AdminSideBar from "@/components/AdminSideBar.vue";
 
 export default {
-  name: 'Admin',
+  name: "Admin",
   components: {
-    AdminSideBar
-  }
-}
+    /* AdminSideBar을 직접 구현해주세요! */
+    // AdminSideBar,
+  },
+};
 </script>
 
-<style>
-</style>
+<style></style>

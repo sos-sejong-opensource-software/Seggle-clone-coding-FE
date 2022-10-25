@@ -107,29 +107,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="user in userList" :key="user">
-            <th scope="row">{{ user.id }}</th>
-            <td>{{ user.username }}</td>
-            <td>{{ user.name }}</td>
-            <td class="email">{{ user.email }}</td>
-            <td>{{ user.date_joined }}</td>
-            <td>{{ user.privilege }}</td>
-            <td scope="row">
-              <button
-                class="edit-btn"
-                data-bs-toggle="modal"
-                data-bs-target="#userModal"
-                @click="openUser(user.username)"
-              >
-                <font-awesome-icon icon="pen" />
-              </button>
-            </td>
-            <td scope="row">
-              <button class="delete-btn" @click="deleteUser(user.username)">
-                <font-awesome-icon icon="trash-can" />
-              </button>
-            </td>
-          </tr>
+          <!-- 내부에 들어갈 코드를 작성해주세요! -->
         </tbody>
       </table>
     </div>
@@ -138,140 +116,50 @@
 </template>
 
 <script>
-import api from '@/api/index.js'
-import Pagination from '@/components/Pagination.vue'
-import { formatTime } from '@/utils/time.js'
-const Swal = require('sweetalert2')
+import api from "@/api/index.js";
+import Pagination from "@/components/Pagination.vue";
+import { formatTime } from "@/utils/time.js";
+const Swal = require("sweetalert2");
 
 export default {
-  name: 'AdminUser',
+  name: "AdminUser",
   components: {
-    Pagination
+    Pagination,
   },
-  data () {
+  data() {
     return {
-      keyword: '',
-      selected: '',
+      keyword: "",
+      selected: "",
       userList: [],
-      Name: '',
-      userEmail: '',
-      userName: '',
+      Name: "",
+      userEmail: "",
+      userName: "",
       currentPage: 1,
-      PageValue: []
-    }
+      PageValue: [],
+    };
   },
-  mounted () {
-    this.init()
+  mounted() {
+    this.init();
   },
   methods: {
-    init () {
-      this.getUserList(1)
+    init() {
+      this.getUserList(1);
     },
     /* 사용자 정보 리스트 불러오기 */
-    async getUserList (page) {
-      try {
-        this.currentPage = page
-        this.PageValue = []
-        const res = await api.getUserList(page, this.keyword)
-        this.PageValue.push({
-          count: res.data.count,
-          currentPage: this.currentPage
-        })
-        this.userList = res.data.results
-        for (const user of this.userList) {
-          user.date_joined = formatTime(user.date_joined)
-          if (user.privilege === 0) {
-            user.privilege = '학생'
-          } else if (user.privilege === 1) {
-            user.privilege = '교수'
-          } else {
-            user.privilege = '관리자'
-          }
-        }
-      } catch (err) {
-        console.log(err)
-      }
-    },
+    async getUserList(page) {},
     /* 사용자 정보 열람 */
-    async openUser (userName) {
-      try {
-        this.currentName = userName
-        const res = await api.editUser(userName)
-        if (res.data.privilege === 0) {
-          this.selected = 'student'
-        } else if (res.data.privilege === 1) {
-          this.selected = 'prof'
-        } else {
-          this.selected = 'admin'
-        }
-        this.userName = res.data.username
-        this.Name = res.data.name
-        this.userEmail = res.data.email
-      } catch (err) {
-        console.log(err)
-      }
-    },
+    async openUser(userName) {},
     /* 사용자 정보 제출 */
-    async submitUser () {
-      try {
-        if (this.selected === 'student') {
-          this.selected = 0
-        } else if (this.selected === 'prof') {
-          this.selected = 1
-        } else {
-          this.selected = 2
-        }
-        const data = {
-          privilege: this.selected
-        }
-        await api.submitUser(this.currentName, data)
-        this.getUserList(1)
-      } catch (err) {
-        console.log(err)
-      }
-    },
+    async submitUser() {},
     /* 사용자 삭제 */
-    async deleteUser (userName) {
-      try {
-        await Swal.fire({
-          title: '삭제하시겠습니까?',
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonText: '확인',
-          cancelButtonText: '취소'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            api.deleteUser(userName)
-            Swal.fire(
-              {
-                title: '삭제되었습니다.',
-                icon: 'success',
-                confirmButtonText: '확인'
-              }
-            ).then((result) => {
-              if (result.isConfirmed) {
-                api.getUserList(1, this.keyword)
-                  .then(res => {
-                    if (this.currentPage !== 1 && res.data.count / 15 < this.currentPage && res.data.count % 15 === 0) {
-                      this.currentPage = this.currentPage - 1
-                    }
-                    this.getUserList(this.currentPage)
-                  })
-              }
-            })
-          }
-        })
-      } catch (err) {
-        console.log(err)
-      }
-    }
+    async deleteUser(userName) {},
   },
   watch: {
-    keyword () {
-      this.getUserList(1)
-    }
-  }
-}
+    keyword() {
+      this.getUserList(1);
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

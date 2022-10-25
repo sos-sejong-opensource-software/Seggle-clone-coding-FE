@@ -20,7 +20,10 @@
           aria-hidden="true"
           data-bs-backdrop="static"
         >
-          <div class="modal-dialog modal-dialog-centered" data-bs-backdrop="static">
+          <div
+            class="modal-dialog modal-dialog-centered"
+            data-bs-backdrop="static"
+          >
             <div class="modal-content">
               <div class="modal-header">
                 <h5 v-if="createMode">FAQ 생성</h5>
@@ -96,41 +99,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-if="count === 0">
-            <td colspan="7">등록된 FAQ가 없습니다.</td>
-          </tr>
-          <tr v-for="faq in faqList" :key="faq">
-            <th scope="row">{{ faq.id }}</th>
-            <td class="title">{{ faq.question }}</td>
-            <td>{{ faq.created_time }}</td>
-            <td>{{ faq.last_modified }}</td>
-            <td>
-              <div style="display: inline-block" class="form-check form-switch">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  id="flexSwitchCheckChecked"
-                  v-model="faq.visible"
-                  @change="changeSwitch(faq.id)"
-                />
-              </div>
-            </td>
-            <td scope="row">
-              <button
-                class="edit-btn"
-                data-bs-toggle="modal"
-                data-bs-target="#faqModal"
-                @click="openFAQ(faq.id)"
-              >
-                <font-awesome-icon icon="pen" />
-              </button>
-            </td>
-            <td scope="row">
-              <button class="delete-btn" @click="deleteFAQ(faq.id)">
-                <font-awesome-icon icon="trash-can" />
-              </button>
-            </td>
-          </tr>
+          <!-- 내부에 들어갈 코드를 작성해주세요! -->
         </tbody>
       </table>
     </div>
@@ -138,123 +107,41 @@
 </template>
 
 <script>
-import api from '@/api/index.js'
-import { formatTime } from '@/utils/time.js'
-const Swal = require('sweetalert2')
+import api from "@/api/index.js";
+import { formatTime } from "@/utils/time.js";
+const Swal = require("sweetalert2");
 
 export default {
-  name: 'AdminFAQ',
-  data () {
+  name: "AdminFAQ",
+  data() {
     return {
-      currentFaqID: '',
+      currentFaqID: "",
       createMode: true,
-      faqQuestion: '',
-      faqAnswer: '',
+      faqQuestion: "",
+      faqAnswer: "",
       faqVisible: true,
       faqList: [],
-      count: 0
-    }
+      count: 0,
+    };
   },
-  mounted () {
-    this.init()
+  mounted() {
+    this.init();
   },
   methods: {
-    init () {
-      this.getFAQList()
-    },
+    /* moun시 FAQ 리스트 불러오기 */
+    init() {},
     /* FAQ 리스트 불러오기 */
-    async getFAQList () {
-      try {
-        const res = await api.getFAQList()
-        this.faqList = res.data
-        this.count = this.faqList.length
-        for (const faq of this.faqList) {
-          faq.created_time = formatTime(faq.created_time)
-          faq.last_modified = formatTime(faq.last_modified)
-        }
-      } catch (err) {
-        console.log(err)
-      }
-    },
+    async getFAQList() {},
     /* FAQ 삭제 */
-    async deleteFAQ (faqID) {
-      try {
-        await Swal.fire({
-          title: '삭제하시겠습니까?',
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonText: '확인',
-          cancelButtonText: '취소'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            api.deleteFAQ(faqID)
-            Swal.fire(
-              {
-                title: '삭제되었습니다.',
-                icon: 'success',
-                confirmButtonText: '확인'
-              }
-            ).then((result) => {
-              if (result.isConfirmed) {
-                this.getFAQList()
-              }
-            })
-          }
-        })
-      } catch (err) {
-        console.log(err)
-      }
-    },
+    async deleteFAQ(faqID) {},
     /* FAQ 열람 */
-    async openFAQ (faqID) {
-      try {
-        if (typeof faqID === 'undefined') {
-          this.createMode = true
-          this.currentFaqID = ''
-          this.faqQuestion = ''
-          this.faqAnswer = ''
-          this.faqVisible = true
-        } else {
-          this.currentFaqID = faqID
-          this.createMode = false
-          const res = await api.editFAQ(faqID)
-          this.faqQuestion = res.data.question
-          this.faqAnswer = res.data.answer
-          this.faqVisible = res.data.visible
-        }
-      } catch (err) {
-        console.log(err)
-      }
-    },
+    async openFAQ(faqID) {},
     /* FAQ 작성 후 제출 */
-    async submitFaq () {
-      try {
-        const data = {
-          question: this.faqQuestion,
-          answer: this.faqAnswer,
-          visible: this.faqVisible
-        }
-        /* 공지사항 수정 or 생성 */
-        if (this.currentFaqID === '') {
-          await api.submitFAQ(data)
-        } else {
-          await api.submitEditFAQ(this.currentFaqID, data)
-        }
-        this.getFAQList()
-      } catch (err) {
-        console.log(err)
-      }
-    },
+    async submitFaq() {},
     /* FAQ 공개 여부 설정 */
-    async changeSwitch (faqID) {
-      try {
-        await api.changeFAQSwitch(faqID)
-      } catch (err) {
-        console.log(err)
-      }
-    }
-  }
-}
+    async changeSwitch(faqID) {},
+  },
+};
 </script>
 
 <style lang="scss" scoped>
