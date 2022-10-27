@@ -3,6 +3,7 @@
     <div class="row">
       <!-- 내부에 들어갈 코드를 작성해주세요! -->
       <AdminSideBar/>
+      <router-view></router-view>
     </div>
   </div>
 </template>
