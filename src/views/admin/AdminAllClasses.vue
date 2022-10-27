@@ -27,6 +27,14 @@
         </thead>
         <tbody>
           <!-- 내부에 들어갈 코드를 작성해주세요! -->
+          <tr v-for="classes in classList" :key="classes" @click="goClass(classes.id)">
+
+            <td>{{classes.id}}</td>
+             <td>{{classes.year}}</td>
+              <td>{{classes.semester}}</td>
+              <td>{{classes.name}}</td>
+              <td>{{classes.created_user}}</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -35,11 +43,11 @@
 </template>
 
 <script>
-// import api from "@/api/index.js";
-// import Pagination from '../../components/Pagination.vue'
+import api from "@/api/index.js";
+import Pagination from '../../components/Pagination.vue'
 
 export default {
-  // components: { Pagination },
+  components: { Pagination },
   name: "AdminAllClasses",
   data() {
     return {
@@ -55,11 +63,26 @@ export default {
   },
   methods: {
     /* mount 하면 1페이지 불러오기 */
-    init() {},
+    init() {
+  this.getClassList(1)
+    },
     /* 페이지값으로 전체수업 리스트 불러오기 */
-    async getClassList(page) {},
+    async getClassList(page) {
+      try{
+      this.currentPage=page
+      const res=await api.getAdminClassList(page)
+      this.classList=res.data.results
+      console.log(res.data)
+      
+      }catch(err){
+        console.log(err)
+      }
+
+    },
     /* 해당 수업으로 이동 */
-    goClass(classID) {},
+    goClass(classID) {
+
+    },
   },
   watch: {
     keyword() {
