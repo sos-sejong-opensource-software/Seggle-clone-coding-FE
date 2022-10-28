@@ -27,6 +27,21 @@
         </thead>
         <tbody>
           <!-- 내부에 들어갈 코드를 작성해주세요! -->
+          <tr v-for="(problem, i) in problemList" :key="i">
+            <td @click="goProblemDetail(problem.id)">{{ problem.id }}</td>
+            <td @click="goProblemDetail(problem.id)">{{ problem.title }}</td>
+            <td @click="goProblemDetail(problem.id)">
+              {{ problem.created_time }}
+            </td>
+            <td @click="goProblemDetail(problem.id)">
+              {{ problem.created_user }}
+            </td>
+            <td>
+              <button class="delete-btn" @click="deleteProblem(problem.id)">
+                <font-awesome-icon icon="trash-can" />
+              </button>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -35,9 +50,9 @@
 </template>
 
 <script>
-// import api from "@/api/index.js";
+import api from "@/api/index.js";
 import Pagination from "../../components/Pagination.vue";
-import { formatTime } from "@/utils/time.js";
+// import { formatTime } from "@/utils/time.js";
 const Swal = require("sweetalert2");
 
 export default {
@@ -64,11 +79,27 @@ export default {
       this.getProblemList(page);
     },
     /* 전체문제 리스트 불러오기 */
-    async getProblemList(page) {},
+    async getProblemList(page) {
+      try {
+        const res = await api.getProblemList(page, this.keyword);
+        this.problemList = res.data.results;
+      } catch (err) {
+        console.log(err);
+      }
+    },
     /* 문제 삭제 */
-    async deleteProblem(problemID) {},
+    async deleteProblem(problemID) {
+      api.deleteProblem(problemID);
+      api.getProblemList(1, this.keyword);
+    },
+
     /* 선택한 문제로 이동 */
-    goProblemDetail(problemID) {},
+    goProblemDetail(problemID) {
+      this.$router.push({
+        name: "AdminProblemDetail",
+        params: { problemID: problemID },
+      });
+    },
   },
   watch: {
     keyword() {
