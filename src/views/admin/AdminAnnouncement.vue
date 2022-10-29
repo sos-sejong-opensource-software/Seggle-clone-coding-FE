@@ -129,6 +129,32 @@
         </thead>
         <tbody>
           <!-- 내부에 들어갈 코드를 작성해주세요! -->
+          <tr v-for="announce in announcementList" :key="announce">
+            <td>{{ announce.id }}</td>
+            <td>{{ announce.title }}</td>
+            <td>{{ announce.created_time }}</td>
+            <td>{{ announce.last_modified }}</td>
+            <td>{{ announce.visible }}</td>
+            <td>{{ announce.important }}</td>
+            <td>
+              <button
+                class="edit-btn"
+                data-bs-toggle="modal"
+                data-bs-target="#announceModal"
+                @click="openAnnouncement(announcement.id)"
+              >
+                <font-awesome-icon icon="pen" />
+              </button>
+            </td>
+            <td>
+              <button
+                class="delete-btn"
+                @click="deleteAnnouncement(announcement.id)"
+              >
+                <font-awesome-icon icon="trash-can" />
+              </button>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -167,14 +193,30 @@ export default {
   },
   methods: {
     /* mount 하면 1페이지 불러오기 */
-    init() {},
+    init() {
+      this.getPage(1);
+    },
     getPage(page) {
       this.getAnnouncementList(page);
     },
     /* 공지사항 리스트 불러오기 */
-    async getAnnouncementList(page) {},
+    async getAnnouncementList(page) {
+      try {
+        const res = await api.getAnnouncementList(page, this.keyword);
+        this.announcementList = res.data.results;
+        for (const announcement of this.announcementList) {
+          announcement.created_time = formatTime(announcement.created_time);
+          announcement.last_modified = formatTime(announcement.last_modified);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    },
     /* 공지사항 삭제 */
-    async deleteAnnouncement(announcementID) {},
+    async deleteAnnouncement(announcementID) {
+      api.deleteAnnouncement(announcementID);
+      api.getAnnouncementList(announcementID, this.keyword);
+    },
     /* 공지사항 열람 */
     async openAnnouncement(announcementID) {},
     /* 공지사항 작성 후 제출 */
