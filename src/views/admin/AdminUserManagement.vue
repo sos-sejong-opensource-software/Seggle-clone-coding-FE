@@ -108,6 +108,29 @@
         </thead>
         <tbody>
           <!-- 내부에 들어갈 코드를 작성해주세요! -->
+          <tr v-for="user in userList" :key="user">
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.date_joined }}</td>
+            <td>{{ user.privilege }}</td>
+            <td scope="row">
+              <button
+                class="edit-btn"
+                data-bs-toggle="modal"
+                data-bs-target="#userModal"
+                @click="openUser(user.username)"
+              >
+                <font-awesome-icon icon="pen" />
+              </button>
+            </td>
+            <td scope="row">
+              <button class="delete-btn" @click="deleteUser(user.username)">
+                <font-awesome-icon icon="trash-can" />
+              </button>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -146,13 +169,27 @@ export default {
       this.getUserList(1);
     },
     /* 사용자 정보 리스트 불러오기 */
-    async getUserList(page) {},
+    async getUserList(page) {
+      try {
+        this.currentPage = page;
+        const res = await api.getUserList(page, this.keyword);
+        this.userList = res.data.results;
+        for (const user of this.userList) {
+          user.date_joined = formatTime(user.date_joined);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    },
     /* 사용자 정보 열람 */
     async openUser(userName) {},
     /* 사용자 정보 제출 */
     async submitUser() {},
     /* 사용자 삭제 */
-    async deleteUser(userName) {},
+    async deleteUser(userName) {
+      api.deleteUser();
+      api.getUserList(this.currentPage);
+    },
   },
   watch: {
     keyword() {

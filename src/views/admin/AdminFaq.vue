@@ -100,6 +100,28 @@
         </thead>
         <tbody>
           <!-- 내부에 들어갈 코드를 작성해주세요! -->
+          <tr v-for="faq in faqList" :key="faq">
+            <td>{{ faq.id }}</td>
+            <td>{{ faq.question }}</td>
+            <td>{{ faq.created_time }}</td>
+            <td>{{ faq.last_modified }}</td>
+            <td>{{ faq.visible }}</td>
+            <td scope="row">
+              <button
+                class="edit-btn"
+                data-bs-toggle="modal"
+                data-bs-target="#faqModal"
+                @click="openFAQ(faq.id)"
+              >
+                <font-awesome-icon icon="pen" />
+              </button>
+            </td>
+            <td scope="row">
+              <button class="delete-btn" @click="deleteFAQ(faq.id)">
+                <font-awesome-icon icon="trash-can" />
+              </button>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -129,11 +151,29 @@ export default {
   },
   methods: {
     /* moun시 FAQ 리스트 불러오기 */
-    init() {},
+    init() {
+      this.getFAQList();
+    },
     /* FAQ 리스트 불러오기 */
-    async getFAQList() {},
+    async getFAQList() {
+      try {
+        const res = await api.getFAQList();
+        console.log(res.data);
+        this.faqList = res.data;
+        console.log(this.faqList);
+        for (const faqlist of this.faqList) {
+          faqlist.created_time = formatTime(faqlist.created_time);
+          faqlist.last_modified = formatTime(faqlist.last_modified);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    },
     /* FAQ 삭제 */
-    async deleteFAQ(faqID) {},
+    async deleteFAQ(faqID) {
+      api.deleteFAQ(faqID);
+      api.getFAQList();
+    },
     /* FAQ 열람 */
     async openFAQ(faqID) {},
     /* FAQ 작성 후 제출 */
